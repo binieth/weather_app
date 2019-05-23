@@ -11,7 +11,7 @@ body {
     justify-content: center;
     flex-direction: column;
     align-items: center;
-    background: linear-gradient(rgb(47,150,163), rgb(48,62,143));
+    background: radial-gradient(circle, rgba(63,94,251,1) 0%, rgba(252,70,107,1) 100%);
     font-family: sans-serif;
     color: white;
 }
@@ -22,6 +22,9 @@ body {
     display: flex;
     justify-content: space-around;
     align-items: center;
+}
+canvas{
+    padding: 5rem;
 }
 .temperature {
     flex-direction: column;
@@ -38,6 +41,9 @@ body {
 
 .degree-section h2{
     font-size: 40px;
+}
+.temperature-description{
+    font-size: 20px;
 }
 
 
