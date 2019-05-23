@@ -1,21 +1,39 @@
 window.addEventListener('load', ()=> {
-    let log; 
+    let long; 
     let lat;
+    let temperatureDescription = document.querySelector(".temperature-description");
+    let temperatureDegree = document.querySelector(".temperature-degree");
+    let locationTimezone = document.querySelector(".location-timezone");
+
 
     if(navigator.geolocation){
-     navigator.geolocation.getCurrentPosition(position=> {
+     navigator.geolocation.getCurrentPosition(position => {
          long = position.coords.longitude; 
          lat = position.coords.latitude;
-         const proxy = 'https://cors-anywhere.herokuapp.com';
-         const api = `${proxy}https://api.darksky.net/forecast/c84cbbe2e875fb32c6390a72c0b7cbb6/$(lat),$(long)`
+         
+        //  const proxy = 'https://cors-anywhere.herokuapp.com';
+         const api = `https://cors-anywhere.herokuapp.com/https://api.darksky.net/forecast/c84cbbe2e875fb32c6390a72c0b7cbb6/${lat},${long}`;
      
          fetch(api)
-     .then(response => {
-         return response.json();
+            .then(response => {
+               return response.json();
      })
-     .then(data =>{
-        console.log(data); 
-     });
-    }); 
+        .then(data => {
+            const{temperature, summary, icon} = data.currently;
+            //set DOM elements from the API
+            temperatureDegree.textContent = temperature;
+            temperatureDescription.textContent = summary;
+            locationTimezone.textContent = data.timezone;
+            //Set Icon
+            setIcons(icon, document.querySelector(".icon"));
+
+        });
+     }); 
+    }
+    function setIcons(icon, iconID){
+        const skycons = new Skycons({color: "white"});
+        const currentIcon = icon.replace(/-/g,"_").toUpperCase();
+        skycons.play();
+        return skycons.set(iconID, Skycons[currentIcon]);
     }
 });
